@@ -20,10 +20,28 @@ public class Main {
                 i = handleFor(line, lines, i);
             } else if (line.startsWith("PRINT")) {
                 handlePrint(line);
+            } else if (line.startsWith("dim")) {
+                handleDim(line);  // Handle variable declarations
             } else if (line.contains("=")) {
                 handleAssignment(line);
             }
             i++;
+        }
+    }
+
+    private void handleDim(String line) {
+        // Handle variable declarations (dim <var_name> as <type>)
+        String[] parts = line.split(" as ");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid dim statement: " + line);
+        }
+        String varName = parts[0].replace("dim", "").trim();
+        String varType = parts[1].trim();
+
+        if ("integer".equals(varType)) {
+            intVariables.put(varName, 0);  // Initialize integer variable with a default value of 0
+        } else {
+            throw new IllegalArgumentException("Unsupported type: " + varType);
         }
     }
 
@@ -57,6 +75,8 @@ public class Main {
                 case "-" -> result -= operand;
                 case "*" -> result *= operand;
                 case "/" -> result /= operand;
+                case "%" -> result %= operand;  // Adding support for modulo operator
+                case "MOD" -> result %= operand; // Handle MOD as alias for %
                 default -> throw new IllegalArgumentException("Unsupported operator: " + operator);
             }
         }
@@ -77,7 +97,7 @@ public class Main {
 
     private void handlePrint(String line) {
         String content = line.substring(5).trim();  // Remove "PRINT"
-        String[] parts = content.split(",");
+        String[] parts = content.split(";");
         StringBuilder output = new StringBuilder();
         for (String part : parts) {
             part = part.trim();
@@ -125,18 +145,68 @@ public class Main {
     public static void main(String[] args) {
         Main interpreter = new Main();
 
-        // Sample BASIC-like code
+        // Example: Sum of First N Numbers
         String program = """
-                dim num$ as string
-                num$ = "12345"
-                dim reverse$ as string
-                reverse$ = ""
-                FOR i = LEN(num$) TO 1 STEP -1
-                    reverse$ = reverse$ + MID$(num$, i, 1)
-                NEXT i
-                PRINT "Reversed number: "; reverse$
-                """;
-
+            dim sum as integer
+            sum = 0
+            dim n as integer
+            n = 10
+            FOR i = 1 TO n
+                sum = sum + i
+            NEXT
+            PRINT "Sum of first "; n; " numbers is: "; sum
+        """;
         interpreter.eval(program);  // Execute the program
+
+        // Example: Factorial of N
+        String program2 = """
+            dim fact as integer
+            fact = 1
+            dim n as integer
+            n = 5
+            FOR i = 1 TO n
+                fact = fact * i
+            NEXT
+            PRINT "Factorial of "; n; " is: "; fact
+        """;
+        interpreter.eval(program2);
+
+        // Example: GCD of Two Numbers (Using MOD for the GCD calculation)
+        String program3 = """
+            dim a as integer
+            dim b as integer
+            a = 56
+            b = 98
+            dim temp as integer
+            WHILE b != 0
+                temp = b
+                b = a MOD b  // Use MOD for modulo operation
+                a = temp
+            WEND
+            PRINT "GCD is: "; a
+        """;
+        interpreter.eval(program3);
+
+        // Example: Palindrome Check
+        String program4 = """
+            dim num as integer
+            dim reversed as integer
+            dim original as integer
+            dim remainder as integer
+            num = 12321
+            original = num
+            reversed = 0
+            WHILE num > 0
+                remainder = num MOD 10  // Use MOD for modulo operation
+                reversed = reversed * 10 + remainder
+                num = num \\ 10
+            WEND
+            IF original = reversed THEN
+                PRINT original; " is a palindrome"
+            ELSE
+                PRINT original; " is not a palindrome"
+            END IF
+        """;
+        interpreter.eval(program4);
     }
 }
