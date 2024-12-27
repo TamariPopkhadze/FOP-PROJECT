@@ -238,5 +238,22 @@ public class Main {
             END IF
         """;
         interpreter.eval(program4);
+        
+        //Example: Sum of digits 
+        String program5="""
+        dim N as integer
+        dim SUM as integer
+        dim DIGIT as integer
+        N = 1234
+        SUM = 0
+        WHILE N != 0
+        DIGIT = N MOD 10
+        SUM = SUM + DIGIT
+        N = N / 10
+        WEND
+        PRINT "The sum of the digits is: "; SUM
+        """;
+        interpret.eval(program5);
+
     }
 }
