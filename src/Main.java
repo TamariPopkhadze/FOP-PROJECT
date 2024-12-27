@@ -18,10 +18,12 @@ public class Main {
 
             if (line.startsWith("FOR")) {
                 i = handleFor(line, lines, i);
+            } else if (line.startsWith("WHILE")) {
+                i = handleWhile(line, lines, i);
             } else if (line.startsWith("PRINT")) {
                 handlePrint(line);
             } else if (line.startsWith("dim")) {
-                handleDim(line);  // Handle variable declarations
+                handleDim(line);
             } else if (line.contains("=")) {
                 handleAssignment(line);
             }
@@ -30,7 +32,6 @@ public class Main {
     }
 
     private void handleDim(String line) {
-        // Handle variable declarations (dim <var_name> as <type>)
         String[] parts = line.split(" as ");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid dim statement: " + line);
@@ -39,7 +40,7 @@ public class Main {
         String varType = parts[1].trim();
 
         if ("integer".equals(varType)) {
-            intVariables.put(varName, 0);  // Initialize integer variable with a default value of 0
+            intVariables.put(varName, 0);
         } else {
             throw new IllegalArgumentException("Unsupported type: " + varType);
         }
@@ -53,12 +54,9 @@ public class Main {
         String varName = parts[0].trim();
         String value = parts[1].trim();
 
-        // Handle integer assignment
         if (value.startsWith("\"") && value.endsWith("\"")) {
-            // String assignment
             stringVariables.put(varName, value.substring(1, value.length() - 1));
         } else {
-            // Integer assignment
             int intValue = evaluateExpression(value);
             intVariables.put(varName, intValue);
         }
@@ -75,8 +73,8 @@ public class Main {
                 case "-" -> result -= operand;
                 case "*" -> result *= operand;
                 case "/" -> result /= operand;
-                case "%" -> result %= operand;  // Adding support for modulo operator
-                case "MOD" -> result %= operand; // Handle MOD as alias for %
+                case "%" -> result %= operand;
+                case "MOD" -> result %= operand;
                 default -> throw new IllegalArgumentException("Unsupported operator: " + operator);
             }
         }
@@ -96,7 +94,7 @@ public class Main {
     }
 
     private void handlePrint(String line) {
-        String content = line.substring(5).trim();  // Remove "PRINT"
+        String content = line.substring(5).trim();
         String[] parts = content.split(";");
         StringBuilder output = new StringBuilder();
         for (String part : parts) {
@@ -125,14 +123,13 @@ public class Main {
         intVariables.put(varName, start);
         int loopStart = index + 1;
 
-        // Loop through the range
         while (intVariables.get(varName) <= end) {
             int i = loopStart;
             while (i < lines.length && !lines[i].trim().equals("NEXT")) {
-                eval(lines[i].trim());  // Evaluate the inner line
+                eval(lines[i].trim());
                 i++;
             }
-            intVariables.put(varName, intVariables.get(varName) + 1);  // Increment the loop variable
+            intVariables.put(varName, intVariables.get(varName) + 1);
         }
 
         while (index < lines.length && !lines[index].trim().equals("NEXT")) {
@@ -140,6 +137,39 @@ public class Main {
         }
 
         return index;
+    }
+
+    private int handleWhile(String line, String[] lines, int index) {
+        String condition = line.substring(6).trim();
+        int startIndex = index + 1;
+
+        while (evaluateCondition(condition)) {
+            int i = startIndex;
+            while (i < lines.length && !lines[i].trim().equals("WEND")) {
+                eval(lines[i].trim());
+                i++;
+            }
+        }
+
+        while (index < lines.length && !lines[index].trim().equals("WEND")) {
+            index++;
+        }
+        return index;
+    }
+
+    private boolean evaluateCondition(String condition) {
+        String[] parts = condition.split(" ");
+        int left = resolveValue(parts[0]);
+        int right = resolveValue(parts[2]);
+        return switch (parts[1]) {
+            case "!=" -> left != right;
+            case ">" -> left > right;
+            case "<" -> left < right;
+            case ">=" -> left >= right;
+            case "<=" -> left <= right;
+            case "==" -> left == right;
+            default -> throw new IllegalArgumentException("Unsupported operator: " + parts[1]);
+        };
     }
 
     public static void main(String[] args) {
@@ -156,7 +186,7 @@ public class Main {
             NEXT
             PRINT "Sum of first "; n; " numbers is: "; sum
         """;
-        interpreter.eval(program);  // Execute the program
+        interpreter.eval(program);
 
         // Example: Factorial of N
         String program2 = """
@@ -171,7 +201,7 @@ public class Main {
         """;
         interpreter.eval(program2);
 
-        // Example: GCD of Two Numbers (Using MOD for the GCD calculation)
+        // Example: GCD of Two Numbers
         String program3 = """
             dim a as integer
             dim b as integer
@@ -180,7 +210,7 @@ public class Main {
             dim temp as integer
             WHILE b != 0
                 temp = b
-                b = a MOD b  // Use MOD for modulo operation
+                b = a MOD b
                 a = temp
             WEND
             PRINT "GCD is: "; a
@@ -197,9 +227,9 @@ public class Main {
             original = num
             reversed = 0
             WHILE num > 0
-                remainder = num MOD 10  // Use MOD for modulo operation
+                remainder = num MOD 10
                 reversed = reversed * 10 + remainder
-                num = num \\ 10
+                num = num / 10
             WEND
             IF original = reversed THEN
                 PRINT original; " is a palindrome"
