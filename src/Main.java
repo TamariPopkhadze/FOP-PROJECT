@@ -253,7 +253,23 @@ public class Main {
         WEND
         PRINT "The sum of the digits is: "; SUM
         """;
-        interpret.eval(program5);
+        interpreter.eval(program5);
+
+        //Reversing a number
+        String program6="""
+            dim N as integer
+            dim REVERSED as integer
+            dim DIGIT as integer
+            N = 456789
+            REVERSED = 0
+            WHILE N != 0
+                DIGIT = N MOD 10
+                REVERSED = REVERSED * 10 + DIGIT
+                N = N / 10
+            WEND
+            PRINT "The reversed number is: "; REVERSED
+        """;
+    interpreter.eval(program6);
 
     }
 }
