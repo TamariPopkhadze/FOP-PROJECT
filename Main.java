@@ -11,15 +11,9 @@ public class Main {
 
         while (i < lines.length) {
             String line = lines[i].trim();
-
-            // Ignore empty lines or comments
-            if (line.isEmpty() || line.startsWith("REM")) {
+            if (line.isEmpty()) {
                 i++;
                 continue;
-            }
-            int remIndex = line.indexOf("REM");
-            if (remIndex != -1) {
-                line = line.substring(0, remIndex).trim();
             }
 
             if (line.startsWith("FOR")) {
@@ -35,8 +29,7 @@ public class Main {
             }
             i++;
         }
-
-}
+    }
 
     private void handleDim(String line) {
         String[] parts = line.split(" as ");
@@ -184,136 +177,119 @@ public class Main {
 
         // Example: Sum of First N Numbers
         String program = """
-                    dim sum as integer
-                    sum = 0
-                    dim n as integer
-                    n = 10
-                    FOR i = 1 TO n
-                        sum = sum + i
-                    NEXT
-                    PRINT "Sum of first "; n; " numbers is: "; sum
-                """;
+            dim sum as integer
+            sum = 0
+            dim n as integer
+            n = 10
+            FOR i = 1 TO n
+                sum = sum + i
+            NEXT
+            PRINT "Sum of first "; n; " numbers is: "; sum
+        """;
         interpreter.eval(program);
 
         // Example: Factorial of N
         String program2 = """
-                    dim fact as integer
-                    fact = 1
-                    dim n as integer
-                    n = 5
-                    FOR i = 1 TO n
-                        fact = fact * i
-                    NEXT
-                    PRINT "Factorial of "; n; " is: "; fact
-                """;
+            dim fact as integer
+            fact = 1
+            dim n as integer
+            n = 5
+            FOR i = 1 TO n
+                fact = fact * i
+            NEXT
+            PRINT "Factorial of "; n; " is: "; fact
+        """;
         interpreter.eval(program2);
 
         // Example: GCD of Two Numbers
         String program3 = """
-                    dim a as integer
-                    dim b as integer
-                    a = 56
-                    b = 98
-                    dim temp as integer
-                    WHILE b != 0
-                        temp = b
-                        b = a MOD b
-                        a = temp
-                    WEND
-                    PRINT "GCD is: "; a
-                """;
+            dim a as integer
+            dim b as integer
+            a = 56
+            b = 98
+            dim temp as integer
+            WHILE b != 0
+                temp = b
+                b = a MOD b
+                a = temp
+            WEND
+            PRINT "GCD is: "; a
+        """;
         interpreter.eval(program3);
 
-//        // Example: Palindrome Check
-//        String program4 = """
-//            dim num as integer
-//            dim reversed as integer
-//            dim original as integer
-//            dim remainder as integer
-//            num = 12321
-//            original = num
-//            reversed = 0
-//            WHILE num > 0
-//                remainder = num MOD 10
-//                reversed = reversed * 10 + remainder
-//                num = num / 10
-//            WEND
-//            IF original = reversed THEN
-//                PRINT original; " is a palindrome"
-//            ELSE
-//                PRINT original; " is not a palindrome"
-//            END IF
-//        """;
-//        interpreter.eval(program4);
-
-        //Example: Sum of digits
-        String program5 = """
-                dim N as integer
-                dim SUM as integer
-                dim DIGIT as integer
-                N = 1234
-                SUM = 0
-                WHILE N != 0
-                DIGIT = N MOD 10
-                SUM = SUM + DIGIT
-                N = N / 10
-                WEND
-                PRINT "The sum of the digits is: "; SUM
-                """;
+        // Example: Palindrome Check
+        String program4 = """
+            dim num as integer
+            dim reversed as integer
+            dim original as integer
+            dim remainder as integer
+            num = 12321
+            original = num
+            reversed = 0
+            WHILE num > 0
+                remainder = num MOD 10
+                reversed = reversed * 10 + remainder
+                num = num / 10
+            WEND
+            IF original = reversed THEN
+                PRINT original; " is a palindrome"
+            ELSE
+                PRINT original; " is not a palindrome"
+            END IF
+        """;
+        interpreter.eval(program4);
+        
+        //Example: Sum of digits 
+        String program5="""
+        dim N as integer
+        dim SUM as integer
+        dim DIGIT as integer
+        N = 1234
+        SUM = 0
+        WHILE N != 0
+        DIGIT = N MOD 10
+        SUM = SUM + DIGIT
+        N = N / 10
+        WEND
+        PRINT "The sum of the digits is: "; SUM
+        """;
         interpreter.eval(program5);
 
         //Reversing a number
-        String program6 = """
-                    dim N as integer
-                    dim REVERSED as integer
-                    dim DIGIT as integer
-                    N = 456789
-                    REVERSED = 0
-                    WHILE N != 0
-                        DIGIT = N MOD 10
-                        REVERSED = REVERSED * 10 + DIGIT
-                        N = N / 10
-                    WEND
-                    PRINT "The reversed number is: "; REVERSED
-                """;
-        interpreter.eval(program6);
+        String program6="""
+            dim N as integer
+            dim REVERSED as integer
+            dim DIGIT as integer
+            N = 456789
+            REVERSED = 0
+            WHILE N != 0
+                DIGIT = N MOD 10
+                REVERSED = REVERSED * 10 + DIGIT
+                N = N / 10
+            WEND
+            PRINT "The reversed number is: "; REVERSED
+        """;
+    interpreter.eval(program6);
 
-        //Example: Finding the largest digit in a number
-
+    //Example: Finding the largest digit in a number 
+    
         String program7 = """
-                    dim N as integer
-                    dim LARGEST as integer
-                    dim DIGIT as integer
-                    N = 457839
-                    LARGEST = 0
-                    WHILE N != 0
-                        DIGIT = N MOD 10
-                        IF DIGIT > LARGEST THEN
-                            LARGEST = DIGIT
-                        ENDIF
-                        N = N / 10
-                    WEND
-                    PRINT "The largest digit is: "; LARGEST
-                """;
+            dim N as integer
+            dim LARGEST as integer
+            dim DIGIT as integer
+            N = 457839
+            LARGEST = 0
+            WHILE N != 0
+                DIGIT = N MOD 10
+                IF DIGIT > LARGEST THEN
+                    LARGEST = DIGIT
+                ENDIF
+                N = N / 10
+            WEND
+            PRINT "The largest digit is: "; LARGEST
+        """;
         interpreter.eval(program7);
 
-
-        String program8 = """
-    dim N as integer
-    dim a as integer
-    dim b as integer
-    dim temp as integer
-    a = 0
-    b = 1
-    N = 10 REM Calculate the 10th Fibonacci number
-    FOR i = 2 TO N
-        temp = a + b
-        a = b
-        b = temp
-    NEXT
-    PRINT "The "; N; "th Fibonacci number is: "; b
-""";
-        interpreter.eval(program8);
 
     }
 }
