@@ -271,5 +271,25 @@ public class Main {
         """;
     interpreter.eval(program6);
 
+    //Example: Finding the largest digit in a number 
+    
+        String program7 = """
+            dim N as integer
+            dim LARGEST as integer
+            dim DIGIT as integer
+            N = 457839
+            LARGEST = 0
+            WHILE N != 0
+                DIGIT = N MOD 10
+                IF DIGIT > LARGEST THEN
+                    LARGEST = DIGIT
+                ENDIF
+                N = N / 10
+            WEND
+            PRINT "The largest digit is: "; LARGEST
+        """;
+        interpreter.eval(program7);
+
+
     }
 }
