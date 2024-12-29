@@ -14,10 +14,6 @@ public class Main {
                 i++;
                 continue;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> d398e4162251399812223bb2caf17c7cfca71b1d
             if (line.startsWith("FOR")) {
                 i = handleFor(line, lines, i);
             } else if (line.startsWith("WHILE")) {
@@ -70,7 +66,6 @@ public class Main {
         for (int i = 1; i < tokens.length; i += 2) {
             String operator = tokens[i];
             int operand = resolveValue(tokens[i + 1]);
-<<<<<<< HEAD
             switch (operator.toUpperCase()) { // Case-insensitive for "MOD"
                 case "+" -> result += operand;
                 case "-" -> result -= operand;
@@ -78,29 +73,6 @@ public class Main {
                 case "/" -> result /= operand;
                 case "MOD", "%" -> result %= operand;
                 default -> throw new IllegalArgumentException("Unsupported operator: " + operator);
-=======
-            switch (operator) {
-                case "+":
-                    result += operand;
-                    break;
-                case "-":
-                    result -= operand;
-                    break;
-                case "*":
-                    result *= operand;
-                    break;
-                case "/":
-                    result /= operand;
-                    break;
-                case "%":
-                    result %= operand;
-                    break;
-                case "MOD":
-                    result %= operand;
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unsupported operator: " + operator);
->>>>>>> d398e4162251399812223bb2caf17c7cfca71b1d
             }
         }
         return result;
@@ -193,7 +165,6 @@ public class Main {
         String[] parts = condition.split(" ");
         int left = resolveValue(parts[0]);
         int right = resolveValue(parts[2]);
-<<<<<<< HEAD
         return switch (parts[1].toUpperCase()) {
             case "!=" -> left != right;
             case ">" -> left > right;
@@ -204,24 +175,6 @@ public class Main {
             case "MOD" -> left % right == 0;
             default -> throw new IllegalArgumentException("Unsupported operator: " + parts[1]);
         };
-=======
-        switch (parts[1]) {
-            case "!=":
-                return left != right;
-            case ">":
-                return left > right;
-            case "<":
-                return left < right;
-            case ">=":
-                return left >= right;
-            case "<=":
-                return left <= right;
-            case "==":
-                return left == right;
-            default:
-                throw new IllegalArgumentException("Unsupported operator: " + parts[1]);
-        }
->>>>>>> d398e4162251399812223bb2caf17c7cfca71b1d
     }
 
 
@@ -256,7 +209,6 @@ public class Main {
 
     public static void main(String[] args) {
         Main interpreter = new Main();
-<<<<<<< HEAD
 
         String program = """
                     dim sum as integer
@@ -433,106 +385,4 @@ public class Main {
         interpreter.eval(program10);
 
     }
-=======
-    
-        // Example: Sum of First N Numbers
-        String program1 = 
-            "dim sum as integer\n" +
-            "sum = 0\n" +
-            "dim n as integer\n" +
-            "n = 10\n" +
-            "FOR i = 1 TO n\n" +
-            "    sum = sum + i\n" +
-            "NEXT\n" +
-            "PRINT \"Sum of first \"; n; \" numbers is: \"; sum\n";
-    
-        interpreter.eval(program1);
-    
-            // Example: Sum of First N Numbers
-            String program2 = 
-                "dim sum as integer\n" +
-                "sum = 0\n" +
-                "dim n as integer\n" +
-                "n = 10\n" +
-                "FOR i = 1 TO n\n" +
-                "    sum = sum + i\n" +
-                "NEXT\n" +
-                "PRINT \"Sum of first \"; n; \" numbers is: \"; sum\n";
-        
-            interpreter.eval(program2);
-        
-
-        // Example: Palindrome Check
-    String program3 = 
-    "dim num as integer\n" +
-    "dim reversed as integer\n" +
-    "dim original as integer\n" +
-    "num = 12321\n" +
-    "original = num\n" +
-    "reversed = 0\n" +
-    "WHILE num != 0\n" +
-    "    reversed = reversed * 10 + num MOD 10\n" +
-    "    num = num / 10\n" +
-    "WEND\n" +
-    "IF original == reversed THEN\n" +
-    "    PRINT \"Number is a palindrome\"\n" +
-    "ELSE\n" +
-    "    PRINT \"Number is not a palindrome\"\n" +
-    "END IF\n";
-
-interpreter.eval(program3);
-}
-
-// Example: Sum of digits
-String program5 = 
-    "dim N as integer\n" +
-    "dim SUM as integer\n" +
-    "dim DIGIT as integer\n" +
-    "N = 1234\n" +
-    "SUM = 0\n" +
-    "WHILE N != 0\n" +
-    "    DIGIT = N MOD 10\n" +
-    "    SUM = SUM + DIGIT\n" +
-    "    N = N / 10\n" +
-    "WEND\n" +
-    "PRINT \"The sum of the digits is: \"; SUM\n";
-
-interpreter.eval(program5);
-
-// Reversing a number
-String program6 = 
-    "dim N as integer\n" +
-    "dim REVERSED as integer\n" +
-    "dim DIGIT as integer\n" +
-    "N = 456789\n" +
-    "REVERSED = 0\n" +
-    "WHILE N != 0\n" +
-    "    DIGIT = N MOD 10\n" +
-    "    REVERSED = REVERSED * 10 + DIGIT\n" +
-    "    N = N / 10\n" +
-    "WEND\n" +
-    "PRINT \"The reversed number is: \"; REVERSED\n";
-    interpreter.eval(program6);
-
-    //Example: Finding the largest digit in a number 
-    
-        // Example: Finding the largest digit in a number
-    String program7 = 
-    "dim N as integer\n" +
-    "dim LARGEST as integer\n" +
-    "dim DIGIT as integer\n" +
-    "N = 457839\n" +
-    "LARGEST = 0\n" +
-    "WHILE N != 0\n" +
-    "    DIGIT = N MOD 10\n" +
-    "    IF DIGIT > LARGEST THEN\n" +
-    "        LARGEST = DIGIT\n" +
-    "    ENDIF\n" +
-    "    N = N / 10\n" +
-    "WEND\n" +
-    "PRINT \"The largest digit is: \"; LARGEST\n";
-
-interpreter.eval(program7);
-}
->>>>>>> d398e4162251399812223bb2caf17c7cfca71b1d
 }
