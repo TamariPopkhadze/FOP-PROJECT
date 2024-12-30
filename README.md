@@ -21,3 +21,23 @@ Features
 -PRINT Statements: Output values, strings, or expressions to the console.
 
 -Error Handling: Robust error handling for invalid syntax or unsupported operations.
+Here's a detailed expansion of the algorithm descriptions, focusing on how each algorithm operates step by step:
+
+1. Sum of First N Numbers
+Algorithm:
+
+Initialize a variable sum to 0 to store the cumulative sum.
+Define a variable n to specify the range (e.g., n = 10).
+Use a FOR loop that iterates from 1 to n.
+On each iteration, add the loop variable i to sum.
+After the loop ends, print the value of sum along with a descriptive message.
+
+dim sum as integer
+    sum = 0
+    dim n as integer
+    n = 10
+    FOR i = 1 TO n
+        sum = sum + i
+    NEXT
+    PRINT "Sum of first "; n; " numbers is: "; sum
+-----
