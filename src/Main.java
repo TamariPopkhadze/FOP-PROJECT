@@ -65,7 +65,7 @@ public class Main {
             intVariables.put(varName, intValue);
         }
     }
-
+//Evalute mathematical expressions
     private int evaluateExpression(String expression) {
         String[] tokens = expression.split("\\s+");
         int result = resolveValue(tokens[0]);
@@ -83,7 +83,7 @@ public class Main {
         }
         return result;
     }
-
+//Resolve a token into corresponding value (either a variable or literal)
     private int resolveValue(String token) {
         if (intVariables.containsKey(token)) {
             return intVariables.get(token);
@@ -95,7 +95,7 @@ public class Main {
             }
         }
     }
-
+//Handle PRINT statement
     private void handlePrint(String line) {
         String content = line.substring(5).trim();
         String[] parts = content.split(";");
@@ -110,9 +110,9 @@ public class Main {
                 output.append(part).append(" ");
             }
         }
-        System.out.println(output.toString().trim());
+        System.out.println(output.toString().trim()); //Print the final output
     }
-
+//Handle FOR loops
     private int handleFor(String line, String[] lines, int index) {
         String[] parts = line.split(" ");
         if (parts.length != 6 || !"TO".equals(parts[4])) {
@@ -139,7 +139,7 @@ public class Main {
 
             intVariables.put(varName, intVariables.get(varName) + 1);
         }
-
+//skip the NEXT statement
         while (index < lines.length && !lines[index].trim().equals("NEXT")) {
             index++;
         }
@@ -147,10 +147,7 @@ public class Main {
         return index;
     }
 
-
-
-
-
+//Handle WHILE loops
     private int handleWhile(String line, String[] lines, int index) {
         String condition = line.substring(6).trim();
         int startIndex = index + 1;
@@ -166,7 +163,7 @@ public class Main {
         }
         return index;
     }
-
+//Evaluate conditions in IF and WHILE statements
     private boolean evaluateCondition(String condition) {
         String[] parts = condition.split(" ");
         int left = resolveValue(parts[0]);
@@ -183,7 +180,7 @@ public class Main {
         };
     }
 
-
+//Handle IF statemenets with optional ELSE blocks.
     private int handleIf(String line, String[] lines, int index) {
         String condition = line.substring(2, line.indexOf("THEN")).trim();
         boolean conditionResult = evaluateCondition(condition);
