@@ -2,18 +2,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
+    //Maps to store integer and string variables
     private final Map<String, Integer> intVariables = new HashMap<>();
     private final Map<String, String> stringVariables = new HashMap<>();
 
+    //Main evaluation method that prcesses a given code string line by line
+
     public void eval(String code) {
-        String[] lines = code.split("\n");
+        String[] lines = code.split("\n"); //Spliting the code into lines
         int i = 0;
         while (i < lines.length) {
-            String line = lines[i].trim();
-            if (line.isEmpty()) {
+            String line = lines[i].trim(); //Trim spaces from the line 
+            if (line.isEmpty()) { //Skip empty lines
                 i++;
                 continue;
             }
+            //Determine the type of statement and handle it aapropriately
             if (line.startsWith("FOR")) {
                 i = handleFor(line, lines, i);
             } else if (line.startsWith("WHILE")) {
@@ -27,23 +31,25 @@ public class Main {
             } else if (line.contains("=")) {
                 handleAssignment(line);
             }
-            i++;
+            i++; //moving to the next line
         }
     }
+    //Handle variable declarations with "dim" keyword
 
     private void handleDim(String line) {
-        String[] parts = line.split(" as ");
+        String[] parts = line.split(" as "); //Split declaration into name and type
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid dim statement: " + line);
         }
         String varName = parts[0].replace("dim", "").trim();
         String varType = parts[1].trim();
         if ("integer".equals(varType)) {
-            intVariables.put(varName, 0);
+            intVariables.put(varName, 0); //Initialize integer variables to 0
         } else {
             throw new IllegalArgumentException("Unsupported type: " + varType);
         }
     }
+    //Handle assignment statements
 
     private void handleAssignment(String line) {
         String[] parts = line.split("=");
@@ -53,9 +59,9 @@ public class Main {
         String varName = parts[0].trim();
         String value = parts[1].trim();
         if (value.startsWith("\"") && value.endsWith("\"")) {
-            stringVariables.put(varName, value.substring(1, value.length() - 1));
+            stringVariables.put(varName, value.substring(1, value.length() - 1)); //Handle string assignments
         } else {
-            int intValue = evaluateExpression(value);
+            int intValue = evaluateExpression(value); //Evaluate integer expressions.
             intVariables.put(varName, intValue);
         }
     }
