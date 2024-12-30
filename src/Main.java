@@ -9,6 +9,7 @@ public class Main {
     //Main evaluation method that prcesses a given code string line by line
 
     public void eval(String code) {
+        try {
         String[] lines = code.split("\n"); //Spliting the code into lines
         int i = 0;
         while (i < lines.length) {
@@ -32,6 +33,9 @@ public class Main {
                 handleAssignment(line);
             }
             i++; //moving to the next line
+        } 
+    }catch (Exception e) {
+            System.err.println("Error while evaluating code: " +e.getMessage());
         }
     }
     //Handle variable declarations with "dim" keyword
