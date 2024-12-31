@@ -129,17 +129,17 @@ Define three integers N (input number), SUM (to store the sum of digits), and DI
 Extract each digit using a WHILE loop, extract the last digit using MOD 10, add the digit to SUM, remove the last digit by dividing N by 10.
 Print the total sum of the digits
 
-dim N as integer
-    dim SUM as integer
-    dim DIGIT as integer
-    N = 1234
-    SUM = 0
-    WHILE N != 0
-        DIGIT = N MOD 10
-        SUM = SUM + DIGIT
-        N = N / 10
-    WEND
-    PRINT "The sum of the digits is: "; SUM
+   dim N as integer
+   dim SUM as integer
+   dim DIGIT as integer
+   N = 1234
+   SUM = 0
+   WHILE N != 0
+       DIGIT = N MOD 10
+       SUM = SUM + DIGIT
+       N = N / 10
+   WEND
+   PRINT "The sum of the digits is: "; SUM
 
 
 6.Reverse a Number
@@ -161,4 +161,30 @@ WHILE N != 0
 WEND
 PRINT "The reversed number is: "; REVERSED
 
+
+
+7.Find the Largest Digit in a Number
+Algorithm:
+
+Define integers: N (input number), LARGEST (to store the largest digit found), and DIGIT (to hold the current digit).
+Initialize LARGEST to 0.
+Extract and compare each digit using a WHILE loop:
+Extract the last digit using MOD 10.
+If the digit is greater than LARGEST, update LARGEST.
+Remove the last digit by dividing N by 10.
+Print the largest digit.
+
+dim N as integer
+dim LARGEST as integer
+dim DIGIT as integer
+N = 457839
+LARGEST = 0
+WHILE N != 0
+    DIGIT = N MOD 10
+    IF DIGIT > LARGEST THEN
+        LARGEST = DIGIT
+    ENDIF
+    N = N / 10
+WEND
+PRINT "The largest digit is: "; LARGEST
 
