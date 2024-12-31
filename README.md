@@ -66,6 +66,8 @@ dim fact as integer
     NEXT
     PRINT "Factorial of "; n; " is: "; fact
 
+
+
 3. Greatest Common Divisor (GCD)
 Algorithm:
 
@@ -91,4 +93,28 @@ dim a as integer
 
 
 
+4. Check if a Number is Palindrome
+Algorithm:
+
+Defined four integers num, original, reverse, digit and need to determine if num is a palindrome.
+Assign the input number to noth num and original.
+Reverse the number using a WHILE loop, extract the las degit using MOD 10, append the digit to reversed, remove the last digit by dividing num bu 10.
+Compare original and reversed.
+
+dim num as integer
+    dim original as interer
+    dim reversed as integer
+    dim digir as integer
+    num = 12321
+    original = num
+    revwrsed = 0
+    WHILE num != 0
+        digit  = num MOD 10
+        reverseg = reversed * 10 + digit
+        num = num/10
+    WEND
+    IF original == reversed THEN
+       PRINT original;"is a palindrome."
+    ELSE original;"is not a palindrome."
+    ENDIF
 
