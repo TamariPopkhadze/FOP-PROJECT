@@ -42,6 +42,7 @@ public class Main {
     //Handle variable declarations with "dim" keyword
 
     private void handleDim(String line) {
+        try{
         String[] parts = line.split(" as "); //Split declaration into name and type
         if (parts.length != 2) { //Check if the declaration format is valid
             throw new IllegalArgumentException("Invalid dim statement: " + line);
@@ -54,9 +55,15 @@ public class Main {
             throw new IllegalArgumentException("Unsupported type: " + varType);
         }
     }
+        catch (Exception e) {
+            System.err.println("Error in dim statement: " + e.getMessage());
+        }
+    }
+
     //Handle assignment statements
 
     private void handleAssignment(String line) {
+        try{
         String[] parts = line.split("="); //Split assignment into variable name and value
         if (parts.length != 2) { //Check if the assignment format is valid
             throw new IllegalArgumentException("Invalid assignment: " + line);
@@ -72,8 +79,13 @@ public class Main {
             intVariables.put(varName, intValue);
         }
     }
+        catch (Exception e) {
+            System.err.println("Error in assignment: " + e.getMessage());
+        }
+    }
 //Evalute mathematical expressions
     private int evaluateExpression(String expression) {
+        try{
         String[] tokens = expression.split("\\s+"); //Split the expression into tokens by spaces
         int result = resolveValue(tokens[0]); //Initialize the result with the first token's value
         for (int i = 1; i < tokens.length; i += 2) { //loop through operators and operands
@@ -91,8 +103,14 @@ public class Main {
         }
         return result;
     }
+          catch (Exception e) {
+            System.err.println("Error in expression evaluation: " + e.getMessage());
+            return 0; // Return a default value on error
+        }
+    }
 //Resolve a token into corresponding value (either a variable or literal)
     private int resolveValue(String token) {
+        try{
         if (intVariables.containsKey(token)) { //If the token is an integer variable
             return intVariables.get(token);
         } else {
@@ -101,6 +119,11 @@ public class Main {
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid value: " + token);
             }
+        }
+    }
+        catch (NumberFormatException e) {
+            System.err.println("Invalid value: " + token);
+            return 0; // Return a default value on error
         }
     }
 //Handle PRINT statement
@@ -122,6 +145,7 @@ public class Main {
     }
 //Handle FOR loops
     private int handleFor(String line, String[] lines, int index) {
+        try{
         String[] parts = line.split(" "); //Split the FOR line into parts
         if (parts.length != 6 || !"TO".equals(parts[4])) { //Check if the loop syntax is valid
             throw new IllegalArgumentException("Invalid FOR loop syntax: " + line);
@@ -154,9 +178,15 @@ public class Main {
 
         return index;
     }
+catch (Exception e) {
+        System.err.println("Error in FOR loop: " + e.getMessage());
+        return index;
+    }
+}
 
 //Handle WHILE loops
     private int handleWhile(String line, String[] lines, int index) {
+        try{
         String condition = line.substring(6).trim();
         int startIndex = index + 1;
         while (evaluateCondition(condition)) {
@@ -173,6 +203,11 @@ public class Main {
         }
         return index;
     }
+        catch (Exception e) {
+        System.err.println("Error in WHILE loop: " + e.getMessage());
+        return index;
+    }
+}
 //Evaluate conditions in IF and WHILE statements
     private boolean evaluateCondition(String condition) {
         String[] parts = condition.split(" ");
@@ -192,6 +227,7 @@ public class Main {
 
 //Handle IF statemenets with optional ELSE blocks.
     private int handleIf(String line, String[] lines, int index) {
+        try{
         String condition = line.substring(2, line.indexOf("THEN")).trim();
         boolean conditionResult = evaluateCondition(condition);
         if (conditionResult) {
@@ -217,6 +253,11 @@ public class Main {
                 }
             }
             return i;
+        }
+    }
+         catch (Exception e) {
+            System.err.println("Error in IF statement: " + e.getMessage());
+            return index;
         }
     }
 
@@ -341,7 +382,7 @@ public class Main {
                     dim isPrime as integer
                     dim i as integer
                     dim limit as integer
-                    num = 29 
+                    num = 30 
                     isPrime = 1
                     limit = num / 2
                     IF num <= 1 THEN
