@@ -142,3 +142,23 @@ dim N as integer
     PRINT "The sum of the digits is: "; SUM
 
 
+6.Reverse a Number
+Algorithm:
+
+This program reverses a given integer.
+Define integers: N (input number), REVERSED (to store the reversed number), and DIGIT (to hold the current digit during reversal). Initialize REVERSED to 0.
+Reverse the number using a WHILE loop. Extract the last digit using MOD 10, append the digit to REVERSED, remove the last digit by dividing N by 10.
+
+dim N as integer
+dim REVERSED as integer
+dim DIGIT as integer
+N = 456789
+REVERSED = 0
+WHILE N != 0
+    DIGIT = N MOD 10
+    REVERSED = REVERSED * 10 + DIGIT
+    N = N / 10
+WEND
+PRINT "The reversed number is: "; REVERSED
+
+
