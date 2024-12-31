@@ -117,4 +117,28 @@ dim num as integer
        PRINT original;"is a palindrome."
     ELSE original;"is not a palindrome."
     ENDIF
+    PRINT original; " is not a palindrome."
+    ENDIF
+
+                
+
+5. Sum of difits
+Algorithm:
+
+Define three integers N (input number), SUM (to store the sum of digits), and DIGIT (to hold the current digit). Initialize SUM to 0.
+Extract each digit using a WHILE loop, extract the last digit using MOD 10, add the digit to SUM, remove the last digit by dividing N by 10.
+Print the total sum of the digits
+
+dim N as integer
+    dim SUM as integer
+    dim DIGIT as integer
+    N = 1234
+    SUM = 0
+    WHILE N != 0
+        DIGIT = N MOD 10
+        SUM = SUM + DIGIT
+        N = N / 10
+    WEND
+    PRINT "The sum of the digits is: "; SUM
+
 
