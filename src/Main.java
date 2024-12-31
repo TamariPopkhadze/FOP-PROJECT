@@ -11,8 +11,8 @@ public class Main {
     public void eval(String code) {
         try {
         String[] lines = code.split("\n"); //Spliting the code into lines
-        int i = 0;
-        while (i < lines.length) {
+        int i = 0; //Initialize the line index to 0
+        while (i < lines.length) { //Iterate through each line
             String line = lines[i].trim(); //Trim spaces from the line 
             if (line.isEmpty()) { //Skip empty lines
                 i++;
@@ -20,21 +20,22 @@ public class Main {
             }
             //Determine the type of statement and handle it aapropriately
             if (line.startsWith("FOR")) {
-                i = handleFor(line, lines, i);
+                i = handleFor(line, lines, i); //Handle FOR loops
             } else if (line.startsWith("WHILE")) {
-                i = handleWhile(line, lines, i);
+                i = handleWhile(line, lines, i); // Handle WHILE loops
             } else if (line.startsWith("PRINT")) {
-                handlePrint(line);
+                handlePrint(line); //Handle PRINT statements
             } else if (line.startsWith("dim")) {
-                handleDim(line);
+                handleDim(line); //Handle variable declarations
             } else if (line.startsWith("IF")) {
-                i = handleIf(line, lines, i);
+                i = handleIf(line, lines, i); //Handle IF-ELSE conditional statements
             } else if (line.contains("=")) {
-                handleAssignment(line);
+                handleAssignment(line); //Handle variable assignment
             }
             i++; //moving to the next line
         } 
     }catch (Exception e) {
+            //Catch and report any runtime errors
             System.err.println("Error while evaluating code: " +e.getMessage());
         }
     }
@@ -42,11 +43,11 @@ public class Main {
 
     private void handleDim(String line) {
         String[] parts = line.split(" as "); //Split declaration into name and type
-        if (parts.length != 2) {
+        if (parts.length != 2) { //Check if the declaration format is valid
             throw new IllegalArgumentException("Invalid dim statement: " + line);
         }
-        String varName = parts[0].replace("dim", "").trim();
-        String varType = parts[1].trim();
+        String varName = parts[0].replace("dim", "").trim(); //Extract variable name
+        String varType = parts[1].trim(); //Extract variable type
         if ("integer".equals(varType)) {
             intVariables.put(varName, 0); //Initialize integer variables to 0
         } else {
@@ -56,27 +57,30 @@ public class Main {
     //Handle assignment statements
 
     private void handleAssignment(String line) {
-        String[] parts = line.split("=");
-        if (parts.length != 2) {
+        String[] parts = line.split("="); //Split assignment into variable name and value
+        if (parts.length != 2) { //Check if the assignment format is valid
             throw new IllegalArgumentException("Invalid assignment: " + line);
         }
-        String varName = parts[0].trim();
-        String value = parts[1].trim();
+        String varName = parts[0].trim(); //Extract name
+        String value = parts[1].trim(); //Extract value to be assigned
         if (value.startsWith("\"") && value.endsWith("\"")) {
+            //Handle string assignments by removing quotes
             stringVariables.put(varName, value.substring(1, value.length() - 1)); //Handle string assignments
         } else {
+            //HAndle integer assignments by evaluating the expression
             int intValue = evaluateExpression(value); //Evaluate integer expressions.
             intVariables.put(varName, intValue);
         }
     }
 //Evalute mathematical expressions
     private int evaluateExpression(String expression) {
-        String[] tokens = expression.split("\\s+");
-        int result = resolveValue(tokens[0]);
-        for (int i = 1; i < tokens.length; i += 2) {
-            String operator = tokens[i];
-            int operand = resolveValue(tokens[i + 1]);
-            switch (operator.toUpperCase()) { // Case-insensitive for "MOD"
+        String[] tokens = expression.split("\\s+"); //Split the expression into tokens by spaces
+        int result = resolveValue(tokens[0]); //Initialize the result with the first token's value
+        for (int i = 1; i < tokens.length; i += 2) { //loop through operators and operands
+            String operator = tokens[i]; //Extract the operator
+            int operand = resolveValue(tokens[i + 1]); //Resolve the next operand's value
+            //Perform the appropriate operation based on the operator
+            switch (operator.toUpperCase()) { 
                 case "+" -> result += operand;
                 case "-" -> result -= operand;
                 case "*" -> result *= operand;
@@ -89,11 +93,11 @@ public class Main {
     }
 //Resolve a token into corresponding value (either a variable or literal)
     private int resolveValue(String token) {
-        if (intVariables.containsKey(token)) {
+        if (intVariables.containsKey(token)) { //If the token is an integer variable
             return intVariables.get(token);
         } else {
             try {
-                return Integer.parseInt(token);
+                return Integer.parseInt(token); //Parse the token as an integer literal
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid value: " + token);
             }
@@ -118,18 +122,18 @@ public class Main {
     }
 //Handle FOR loops
     private int handleFor(String line, String[] lines, int index) {
-        String[] parts = line.split(" ");
-        if (parts.length != 6 || !"TO".equals(parts[4])) {
+        String[] parts = line.split(" "); //Split the FOR line into parts
+        if (parts.length != 6 || !"TO".equals(parts[4])) { //Check if the loop syntax is valid
             throw new IllegalArgumentException("Invalid FOR loop syntax: " + line);
         }
 
-        String varName = parts[1];
-        int start = evaluateExpression(parts[3]);
-        int end = evaluateExpression(parts[5]);
-        intVariables.put(varName, start);
+        String varName = parts[1];//Extract the loop variable name
+        int start = evaluateExpression(parts[3]); //Evaluate the starting value
+        int end = evaluateExpression(parts[5]); //Evaluate the ending value
+        intVariables.put(varName, start); //Initialize the lop variable with the starting value
 
-        int loopStart = index + 1;
-        while (intVariables.get(varName) <= end) {
+        int loopStart = index + 1; //Determine the starting index of the loop body
+        while (intVariables.get(varName) <= end) { //Loop until the variable exceed the end value
             int i = loopStart;
 
             // This loop will now iterate through the loop body, executing each line
@@ -157,11 +161,13 @@ public class Main {
         int startIndex = index + 1;
         while (evaluateCondition(condition)) {
             int i = startIndex;
+            //Iterate through the loop body and excute each line
             while (i < lines.length && !lines[i].trim().equals("WEND")) {
                 eval(lines[i].trim());
                 i++;
             }
         }
+        //Skip the WEND statement and return the updated index
         while (index < lines.length && !lines[index].trim().equals("WEND")) {
             index++;
         }
