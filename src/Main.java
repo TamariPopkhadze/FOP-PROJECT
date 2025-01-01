@@ -364,7 +364,7 @@ catch (Exception e) {
                     dim N as integer
                     dim LARGEST as integer
                     dim DIGIT as integer
-                    N = 457839
+                    N = 957839
                     LARGEST = 0
                     WHILE N != 0
                         DIGIT = N MOD 10
