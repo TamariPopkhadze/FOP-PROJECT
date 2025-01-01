@@ -231,3 +231,26 @@ IF isPrime == 1 THEN
 ELSE
     PRINT num; " is not a prime number."
 ENDIF
+
+
+
+
+9.Multiplication table
+Algorithm:
+
+This generates and prints the multiplication table for a given number.
+Define three integers num (the number for which the multiplication table is generated), i (loop counter), and result (result of multiplication).
+Use a FOR loop to iterate from 1 to 10.
+Multiply num by the current value of i.
+ Store the result in result.
+ Print the multiplication in the format "num * i = result".
+
+dim num as integer
+dim i as integer
+dim result as integer
+num = 5
+PRINT "Multiplication Table for "; num
+FOR i = 1 TO 10
+    result = num * i
+    PRINT num; " * "; i; " = "; result
+NEXT
