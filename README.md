@@ -47,6 +47,7 @@ Algorithm:
 
 
 
+
 2. Factorial Calculation
 Algorithm:
 
@@ -65,6 +66,7 @@ dim fact as integer
         fact = fact * i
     NEXT
     PRINT "Factorial of "; n; " is: "; fact
+
 
 
 
@@ -90,6 +92,7 @@ dim a as integer
         a = temp
     WEND
     PRINT "GCD is: "; a
+
 
 
 
@@ -122,6 +125,7 @@ dim num as integer
 
                 
 
+
 5. Sum of difits
 Algorithm:
 
@@ -142,6 +146,8 @@ Print the total sum of the digits
    PRINT "The sum of the digits is: "; SUM
 
 
+
+
 6.Reverse a Number
 Algorithm:
 
@@ -160,6 +166,7 @@ WHILE N != 0
     N = N / 10
 WEND
 PRINT "The reversed number is: "; REVERSED
+
 
 
 
@@ -188,3 +195,39 @@ WHILE N != 0
 WEND
 PRINT "The largest digit is: "; LARGEST
 
+
+
+
+8.Check if a Number is Prime
+Algorithm:
+
+Define integers: num (input number), isPrime (flag to indicate if the number is prime), i (loop counter), and limit (half of the input number).
+Initialize isPrime to 1, assume the number is prime.
+Check if num is less than or equal to 1. If true, set isPrime to 0 (not prime).
+Otherwise, use a FOR loop to test divisors from 2 to limit. If num MOD i equals 0, set isPrime to 0 and exit the loop.
+After the loop, check the value of isPrime:
+If 1, print that the number is prime. Otherwise, print that it is not prime.
+
+dim num as integer
+dim isPrime as integer
+dim i as integer
+dim limit as integer
+num = 29
+isPrime = 1
+limit = num / 2
+IF num <= 1 THEN
+    isPrime = 0
+ELSE
+    FOR i = 2 TO limit
+        IF num MOD i == 0 THEN
+            isPrime = 0
+            EXIT
+        ENDIF
+    NEXT
+ENDIF
+
+IF isPrime == 1 THEN
+    PRINT num; " is a prime number."
+ELSE
+    PRINT num; " is not a prime number."
+ENDIF
