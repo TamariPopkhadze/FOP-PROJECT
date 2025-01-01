@@ -254,3 +254,33 @@ FOR i = 1 TO 10
     result = num * i
     PRINT num; " * "; i; " = "; result
 NEXT
+
+10.Fibonacci Algorithm :
+
+This generates and prints the Fibonacci sequence up to a specified number of terms. Define three integers: n1 (first term of the sequence), n2 (second term of the sequence), and next (next term in the sequence). Use a FOR loop to iterate through the desired number of terms. Print n1 and calculate the next term as the sum of n1 and n2. Assign n2 to n1 and next to n2 to update the values for the next iteration. 
+
+dim n1 as integer
+dim n2 as integer
+dim next as integer
+dim terms as integer
+
+n1 = 0
+n2 = 1
+PRINT "Fibonacci Sequence:"
+
+PRINT n1
+PRINT n2
+
+FOR i = 3 TO terms
+    next = n1 + n2
+    PRINT next
+    n1 = n2
+    n2 = next
+NEXT
+
+Explanation:
+
+-Initialize the first two terms of the Fibonacci sequence (n1 = 0 and n2 = 1).
+-Start the sequence by printing the first two terms (n1 and n2).
+-Use a FOR loop to calculate and print subsequent terms up to the number of terms specified (terms).
+-Update n1 and n2 in each iteration to continue the sequence.
